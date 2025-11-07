@@ -1,18 +1,37 @@
 from rest_framework import serializers
-from .models import Product, Variant
+from .models import Product, Variant, Merchant
 
-# --- Basic serializers ---
+class MerchantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Merchant
+        fields = ["id", "name", "email", "store_url", "status", "created_at"]
+        read_only_fields = ["id", "created_at"]
+
 
 class VariantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Variant
-        fields = ['external_id', 'name', 'sku', 'price', 'retail_price', 'quantity', 'active']
+        fields = [
+            "id",
+            "external_id",
+            "name",
+            "sku",
+            "price",
+            "retail_price",
+            "quantity",
+            "active",
+        ]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = ['id', 'title', 'product_type', 'base_price', 'active']
+        fields = ['id', 'title', 'base_price', 'active', 'image_url']
+
+    def get_image_url(self, obj):
+        return None
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -21,8 +40,15 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'external_id', 'title', 'description', 'product_type',
-            'base_price', 'active', 'variants'
+            "id",
+            "external_id",
+            "title",
+            "description",
+            "product_type",
+            "active",
+            "base_price",
+            "created_at",
+            "variants",
         ]
 
 

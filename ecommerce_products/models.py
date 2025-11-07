@@ -9,7 +9,7 @@ class Merchant(models.Model):
 
 class Product(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, related_name='products')
-    external_id = models.CharField(max_length=255)  # ID from external platform
+    external_id = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     product_type = models.CharField(max_length=100, blank=True)

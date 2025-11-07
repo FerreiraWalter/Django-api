@@ -2,9 +2,6 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# ==========================
-# CONFIGURAÇÃO BÁSICA
-# ==========================
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,9 +10,6 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'dev-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
-# ==========================
-# APLICAÇÕES
-# ==========================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,19 +18,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # libs
     'rest_framework',
     'corsheaders',
 
-    # apps
     'ecommerce_products',
 ]
 
-# ==========================
-# MIDDLEWARE
-# ==========================
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # deve vir antes do CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -46,9 +35,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ==========================
-# URLS / WSGI
-# ==========================
 ROOT_URLCONF = 'ecommerce.urls'
 
 TEMPLATES = [
@@ -69,9 +55,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-# ==========================
-# BANCO DE DADOS
-# ==========================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -83,9 +66,6 @@ DATABASES = {
     }
 }
 
-# ==========================
-# DRF
-# ==========================
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -98,28 +78,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
-# ==========================
-# CORS
-# ==========================
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# ==========================
-# ARQUIVOS ESTÁTICOS E MÍDIA
-# ==========================
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ==========================
-# OUTROS
-# ==========================
-LANGUAGE_CODE = 'pt-br'
-TIME_ZONE = 'America/Sao_Paulo'
-USE_I18N = True
-USE_TZ = True
+LANGUAGE_CODE = 'en-us'
 
-APPEND_SLASH = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
