@@ -6,7 +6,6 @@ def import_product_from_external(validated_data):
     store_url = validated_data["store_url"]
     product_data = validated_data["product"]
 
-    # 1️⃣ Validar merchant
     try:
         merchant = Merchant.objects.get(store_url=store_url)
     except Merchant.DoesNotExist:
@@ -14,7 +13,6 @@ def import_product_from_external(validated_data):
 
     external_id = product_data["id"]
 
-    # 2️⃣ Criar produto (ou retornar existente)
     try:
         product, created = Product.objects.get_or_create(
             merchant=merchant,
@@ -30,11 +28,9 @@ def import_product_from_external(validated_data):
     except IntegrityError:
         raise ValueError("A product with this external_id already exists for this merchant.")
 
-    # Se já existir, não cria de novo
     if not created:
         return product, False
 
-    # 3️⃣ Criar variants em bulk
     variants_to_create = []
     for v in product_data["variants"]:
         retail_price = v.get("compare_at_price") or v["price"]
